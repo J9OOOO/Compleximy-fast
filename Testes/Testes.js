@@ -1,6 +1,6 @@
 const test = require("node:test")
 const assert = require("node:assert/strict")
-const { Co } = require("./Compleximy-fast")
+const { Co } = require("./../Compleximy-fast")
 const {Complex} = require("complex.js")
 const C = require("Compleximy")
 

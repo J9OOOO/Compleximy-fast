@@ -1,3 +1,5 @@
+const TOL = 2 * Number.EPSILON
+
 class Co {
     constructor(real, imag) {
         if (real instanceof Co) {
@@ -12,8 +14,8 @@ class Co {
             throw new Error(`Resultado inválido: partes não finitas (${real}, ${imag})`)
         }
         
-        this.real = Math.abs(real) < 1e-15 ? 0 : real
-        this.imag = Math.abs(imag) < 1e-15 ? 0 : imag
+        this.real = Math.abs(real) < TOL ? 0 : real
+        this.imag = Math.abs(imag) < TOL ? 0 : imag
     }
 
     static parser(real, imag) {
@@ -147,6 +149,9 @@ class Co {
     r() {
         return new Co(Math.hypot(this.real, this.imag))
     }
+    r2() {
+        return new Co(this.real ** 2 +  this.imag ** 2)
+    }
     theta() {
         return new Co(Math.atan2(this.imag, this.real))
     }
@@ -176,6 +181,10 @@ class Co {
     }
     rot(b, b1) {
         return this.mul(toInternalToCo(parser(b, b1)).i().exp())
+    }
+    distance(b, b1) {
+        const b2 = parser(b, b1)
+        return new Co(Math.hypot(Math.abs(this.real - b2.real), Math.abs(this.imag - b2.imag)))
     }
     eq(b, b1) {
         return eq(this, parser(b, b1))
@@ -827,24 +836,9 @@ function invSq(a, b) {
     return (1 / m) / (m * (u * u + v * v));
 }
 
-function bench(nome, fn, N = 1e6, aquec = 1e5) {
-    for (let i = 0; i < aquec; i++) fn(i)
-
-    const t0 = process.hrtime.bigint()
-    for (let i = 0; i < N; i++) fn(i)
-    const t1 = process.hrtime.bigint()
-
-    const ns = Number(t1 - t0) / N
-    return ns
-}
-
 const PI_2 = Math.PI / 2
 const SQRT3 = Math.sqrt(3)
 
-let x = 1
-
-bench("a",  () => {x += 0.00001; new Co(x, x).div(2, 3)})
-//Eu não sei como mas isso acelera o mul e div
 
 module.exports = {
     Co

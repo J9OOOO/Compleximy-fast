@@ -1,6 +1,7 @@
 const Benchmark = require("./Performance")
-const { Co } = require("./../Compleximy-fast.js")
+const { Co } = require("./../Compleximy-fast")
 const {Complex} = require("complex.js")
+const gh = require("decimal.js")
 
 const RANGE = 30
 
@@ -64,6 +65,18 @@ Benchmark.bench("Co.tanh", i => {
     new Co(i % RANGE, i % RANGE).tanh()
 })
 
+Benchmark.bench("Co.asin", i => {
+    new Co(i % RANGE, i % RANGE).asin()
+})
+
+Benchmark.bench("Co.acos", i => {
+    new Co(i % RANGE, i % RANGE).acos()
+})
+
+Benchmark.bench("Co.atan", i => {
+    new Co(i % RANGE, i % RANGE).atan()
+})
+
 console.log("")
 
 Benchmark.bench("Complex.add", i => {
@@ -124,4 +137,16 @@ Benchmark.bench("Complex.cosh", i => {
 
 Benchmark.bench("Complex.tanh", i => {
     new Complex(i % RANGE, i % RANGE).tanh()
+})
+
+Benchmark.bench("Complex.asin", i => {
+    new Complex(i % RANGE, i % RANGE).asin()
+})
+
+Benchmark.bench("Complex.acos", i => {
+    new Complex(i % RANGE, i % RANGE).acos()
+})
+
+Benchmark.bench("Complex.atan", i => {
+    new Complex(i % RANGE, i % RANGE).atan()
 })

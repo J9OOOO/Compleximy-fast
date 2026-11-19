@@ -614,7 +614,7 @@ const Complexos = {
 
         if (y === 0) return new Co(Math.atan(x), 0);
         if (x === 0)  {
-            if (Math.abs(y) < 1) new Co(0, Math.atanh(y))
+            if (Math.abs(y) < 1) return new Co(0, Math.atanh(y))
             return new Co(Math.sign(y) * PI_2, 0.5 * Math.log(Math.abs((y + 1) / (y - 1))))
         }
         const r1 = Math.hypot(x, y + 1);
@@ -850,4 +850,4 @@ module.exports = {
     Co
 }
 
-console.log(new Co(1, -1).asinh().sinh())
+//console.log(new Co(1, -1).asinh().sinh())

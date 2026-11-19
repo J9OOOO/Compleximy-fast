@@ -561,7 +561,7 @@ const Complexos = {
             let inln = a.real + sqrt_x2m1(a.real)
             if (inln >= 0) {
                 imag = - Math.log(inln)
-                real = sig === 1 ? PI_2 : - 3 * PI_2
+                real = sig === 1 ? PI_2 : - PI_2
                 return new Co(real, imag)
             }
             imag = - Math.log(Math.abs(inln))
@@ -581,7 +581,7 @@ const Complexos = {
         return new Co(realPart, imagPart);
     },
     acos(a) {
-        if (a.real === 0) return new Co(Math.acosh(a.imag))
+        if (a.real === 0) return new Co(PI_2, - Math.asinh(a.imag))
         if (a.imag === 0) {
             if (a.real <= 1 && a.real >= -1) return new Co(Math.acos(a.real))
             let real, imag
@@ -613,12 +613,14 @@ const Complexos = {
         const y = a.imag;
 
         if (y === 0) return new Co(Math.atan(x), 0);
-        if (x === 0) return new Co(0, Math.atanh(y)); 
-
+        if (x === 0)  {
+            if (Math.abs(y) < 1) new Co(0, Math.atanh(y))
+            return new Co(Math.sign(y) * PI_2, 0.5 * Math.log(Math.abs((y + 1) / (y - 1))))
+        }
         const r1 = Math.hypot(x, y + 1);
         const r2 = Math.hypot(x, y - 1);
         
-        const realPart = 0.5 * Math.atan2(2 * x, 1 - Math.hypot(x, y));
+        const realPart = 0.5 * Math.atan2(2 * x, 1 - (x ** 2 + y ** 2));
 
         const imagPart = 0.5 * Math.log(r1 / r2);
 
@@ -691,12 +693,16 @@ const Complexos = {
         const x = a.real, y = a.imag;
 
         if (y === 0) return new Co(Math.asinh(x), 0);
-        if (x === 0) return new Co(0, Math.asin(y));
+        if (x === 0) {
+            if (Math.abs(y) <= 1) return new Co(0, Math.asin(y));
+            if (y > 1) return new Co(Math.acosh(y), PI_2)
+            return new Co(- Math.acosh(y), - PI_2)
+        }
 
         let rp = Math.hypot(x + 1, y)
         let rm = Math.hypot(x - 1, y)
 
-        return new Co(Math.sign(x) * Math.acosh((rp + rm) * 0.5), Math.asin((rp - rm) * 0.5))
+        return new Co(Math.sign(x) * Math.acosh((rp + rm) * 0.5), Math.sign(x) * Math.sign(y) * Math.asin((rp - rm) * 0.5))
     },
     acosh(a) {
         const x = a.real;
@@ -709,8 +715,7 @@ const Complexos = {
             return new Co(Math.acosh(-x), Math.PI);
         }
         if (x === 0) {
-            return new Co(0, Math.acos(y)); 
-        }
+            return new Co(Math.asinh(Math.abs(y)), Math.sign(y) * Math.PI / 2);}
 
         let rp = Math.hypot(x + 1, y)
         let rm = Math.hypot(x - 1, y)
@@ -723,6 +728,7 @@ const Complexos = {
 
         if (y === 0) {
             if (x >= -1 && x <= 1) return new Co(Math.atanh(x), 0);
+            return new Co(0.5 * Math.log(Math.abs((1 + x) / (1 - x))), PI_2 * Math.sign(x))
         }
         if (x === 0) {
             return new Co(0, Math.atan(y));
@@ -843,3 +849,5 @@ const SQRT3 = Math.sqrt(3)
 module.exports = {
     Co
 }
+
+console.log(new Co(1, -1).asinh().sinh())

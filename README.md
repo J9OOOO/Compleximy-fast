@@ -188,21 +188,24 @@ Aceita:
 
 | Operation | Compleximy-fast (`Co`) | complex.js (`Complex`) |
 |:----------|-----------------------:|-----------------------:|
-| add     | 18.09 ns/op            | 27.55 ns/op            |
-| mul     | 25.93 ns/op            | 28.21 ns/op            |
-| div     | 31.35 ns/op            | 32.42 ns/op            |
-| sqrt    | 34.01 ns/op            | 34.50 ns/op            |
-| cbrt    | 58.75 ns/op            | 80.39 ns/op            |
-| ln      | 46.24 ns/op            | 45.19 ns/op            |
-| log     | 47.52 ns/op            | 71.93 ns/op            |
-| pow2    | 16.50 ns/op            | 82.54 ns/op            |
-| pow3    | 17.08 ns/op            | 88.20 ns/op            |
-| sin     | 59.01 ns/op            | 71.47 ns/op            |
-| cos     | 63.76 ns/op            | 73.27 ns/op            |
-| tan     | 62.63 ns/op            | 69.33 ns/op            |
-| sinh    | 60.61 ns/op            | 74.19 ns/op            |
-| cosh    | 67.27 ns/op            | 70.81 ns/op            |
-| tanh    | 58.10 ns/op            | 72.42 ns/op            |
+| add  | 17.95 ns/op | 26.91 ns/op |
+| mul  | 29.24 ns/op | 28.41 ns/op |
+| div  | 28.10 ns/op | 32.81 ns/op |
+| sqrt | 33.65 ns/op | 36.64 ns/op |
+| cbrt | 58.36 ns/op | 81.52 ns/op |
+| ln   | 45.94 ns/op | 45.31 ns/op |
+| log  | 47.16 ns/op | 71.98 ns/op |
+| pow2 | 16.25 ns/op | 82.72 ns/op |
+| pow3 | 17.08 ns/op | 89.03 ns/op |
+| sin  | 59.04 ns/op | 71.72 ns/op |
+| cos  | 63.73 ns/op | 73.88 ns/op |
+| tan  | 62.40 ns/op | 71.28 ns/op |
+| sinh | 60.40 ns/op | 73.91 ns/op |
+| cosh | 66.98 ns/op | 70.98 ns/op |
+| tanh | 58.20 ns/op | 74.37 ns/op |
+| asin | 65.24 ns/op | 100.07 ns/op |
+| acos | 65.74 ns/op | 102.96 ns/op |
+| atan | 58.29 ns/op | 63.07 ns/op |
 
 Obs:
 Os benchmarks foram feitos nas mesmas condições, e eles representam as médias de cada operação, os números podem variar com o ambiente de execução

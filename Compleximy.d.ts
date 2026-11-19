@@ -130,6 +130,4 @@ export declare class Co {
     static readonly ZERO: Co
 
     static parser(value: parserInput): Co
-    static Polar(value: CoInput): Co
-
 }

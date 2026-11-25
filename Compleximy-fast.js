@@ -8,18 +8,16 @@ class Co {
             this.imag = real.imag
             return
         }
-
-        if (imag === undefined) imag = 0
-        if (!isFinite(real) || !isFinite(imag)) {
-            throw new Error(`Resultado inválido: partes não finitas (${real}, ${imag})`)
-        }
         
-        this.real = Math.abs(real) < TOL ? 0 : real
-        this.imag = Math.abs(imag) < TOL ? 0 : imag
-    }
+        if (Number.isFinite(real) && Number.isFinite(imag)) {
+            if (imag === undefined) imag = 0
+            this.real = Math.abs(real) < TOL ? 0 : real
+            this.imag = Math.abs(imag) < TOL ? 0 : imag
+            return
+        }
 
-    static parser(real, imag) {
-        return toInternalToCo(parser(real, imag))
+        const p = parser(real, imag)
+        return new Co(p.real, p.imag)
     }
 
 
@@ -192,6 +190,12 @@ class Co {
     noeq(b, b1) {
         return !eq(this, parser(b, b1))
     }
+    GetReal() {
+        return this.real
+    }
+    GetImag() {
+        return this.imag
+    }
     toArray() {
         return [this.real, this.imag]
     }
@@ -272,11 +276,11 @@ function parser(a, a1) {
     if (tipo === "string") {
         //O primeiro try já pega strings, então para números em strings já está resolvido
         if (a.includes(" ")) {
-            let a2 = []
+            let a2 = ""
             for (let i = 0; i < a.length; ++i) {
                 if (a[i] !== " ") a2.push(a[i])
             }
-            a = a2.join("")
+            a = a2
         }
         let r = a.indexOf("r")
         let r1 = a.indexOf("∠")
@@ -357,6 +361,9 @@ function parser(a, a1) {
 
         if (Real === undefined) Real = Number(SReal) * SinalEsq
         if (Imag === undefined) Imag = SImag === "" ? Sinal : Number(SImag) * Sinal
+
+        if (!isFinite(Real) || !isFinite(Imag)) throw new Error(`NaN em alguma parte: ${a}`)
+        //Não pode retornar NaN ou Infinity
 
         return {real: Real, imag: Imag}
     }
@@ -642,8 +649,7 @@ const Complexos = {
             if (a.imag > 0) return new Co(Math.log(a.imag), PI_2)
             return new Co(Math.log(- a.imag), - PI_2)
         }
-        let real = Math.log(Math.hypot(a.real, a.imag))
-        return new Co(real, Math.atan2(a.imag, a.real))
+        return new Co(Math.log(Math.hypot(a.real, a.imag)), Math.atan2(a.imag, a.real))
     },
     sinh(a) {
         const x = a.real
@@ -850,4 +856,4 @@ module.exports = {
     Co
 }
 
-//console.log(new Co(1, -1).asinh().sinh())
+console.log(parser("1-i"))

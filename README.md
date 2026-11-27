@@ -95,7 +95,7 @@ O truncamento é para qualquer número menor que 2 * Number.EPSILON (~4.4e-16) e
 | MINUS_ONE | -1 |
 | ZERO | 0 |
 
-## Co.parser
+## Co
 Aceita:
 |---|
   |Número: (-1, 3, -7812, 1.94, "34", "8230134", "-98143", ...)|
